@@ -1,9 +1,3 @@
-
-# input ---------------------------------------------------------------
-productos <- c("", "Windows 7", "Windows 8", "Mac", "Linux",
-                 "Other")
-
-
 input_data_tab<-function(){
   tabItem(tabName = "input_data_tab",
           fluidRow(box(width=12,title="", includeMarkdown("save_data.md"))),
@@ -68,17 +62,31 @@ browse_data_tab<-function(){
   )
 
   )
-  }
+}
+
+
+# header-------------------------------------------------------------- 
+
+header <- dashboardHeader(title = "Quality Limpieza")
+
+# sidebar--------------------------------------------------------------
+sidebar <- dashboardSidebar(
+  sidebarMenu(width = 250,
+              sidebarSearchForm(textId = "searchText", buttonId = "searchButton",
+                                label = "Search..."),
+              menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
+              menuItem("Ventas", icon = icon("th"), tabName = "Ventas",
+                       menuSubItem("Alta", tabName = "input_data_tab",selected = TRUE),
+                       menuSubItem("Consulta", tabName = "browse_data_tab",selected = TRUE))
+             
+  )
+)
+
 
 # Dashboard -----------------------------------------------------------
 dashboardPage(
-  dashboardHeader(title = "Quality Limpieza"),
-  dashboardSidebar(width = 150, 
-                   sidebarMenu(id = "tabs",
-                               menuItem("Alta", tabName = "input_data_tab", icon=icon("file-alt")),
-                               menuItem("Busqueda",tabName = "browse_data_tab",icon = icon("archive")),
-                               menuItem("Deposito",tabName = "deposito",icon = icon("archive"))
-                               )),
+  header, 
+  sidebar,
   dashboardBody(
     #tags$head(includeScript("tracking.js")),
     useShinyjs(),
