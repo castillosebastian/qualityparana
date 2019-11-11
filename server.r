@@ -22,7 +22,6 @@ registerData<-observeEvent(input$save,{
          dbWriteTable(conn, datatable, my_dataset,append=TRUE)
    }) 
  showModal(modalDialog(
-
   title = "Thank you!",
   "Data has been saved"
   ))
@@ -32,13 +31,11 @@ allData<-function(){
     shiny::validate(need(nrow(my_data)>0,"no data"))
     return(my_data)
   }
+
 output$data <- DT::renderDataTable({
-
   data<-allData()
-
-  data<-data%>%select(
-  everything()
-  )
+  data <- data %>%
+    select(everything())
 
   DT::datatable(data,  selection = 'single',
   filter='top',
@@ -51,6 +48,7 @@ output$data <- DT::renderDataTable({
     columnDefs = list(list(width = '300px', targets = c(6))))
   )
 })
+
 output$download_data <- downloadHandler(
   filename = function() {
   paste("download_data", ".csv", sep = "")

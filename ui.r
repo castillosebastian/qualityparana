@@ -1,5 +1,9 @@
 
 # input ---------------------------------------------------------------
+productos <- c("", "Windows 7", "Windows 8", "Mac", "Linux",
+                 "Other")
+
+
 input_data_tab<-function(){
   tabItem(tabName = "input_data_tab",
           fluidRow(box(width=12,title="", includeMarkdown("save_data.md"))),
@@ -10,6 +14,11 @@ input_data_tab<-function(){
                        textInput(inputId="id_fecha",label="id_fecha",placeholder="Change placeholder") %>%
                          shinyInput_label_embed(icon("info") %>%
                                                   bs_embed_tooltip(title = "Change this help text for input")),
+                       
+                       selectInput(inputId = "osType", label = "Operating system",
+                                   choices = productos,
+                                   selected = ""), 
+                       
                        textInput(inputId="op_tipo",label="op_tipo",placeholder="Change placeholder") %>% 
                          shinyInput_label_embed(icon("info") %>% 
                                                   bs_embed_tooltip(title = "Change this help text for input")),
