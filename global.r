@@ -17,8 +17,9 @@ library(dbplyr)
 library(RSQLite)
 library(googlesheets4)
 library(googledrive)
+#DB --------------------------------------------------------------------------
 conn <- dbConnect(RSQLite::SQLite(),"my-db.sqlite")
-datatable="my_datatable"
-
+datatable = "my_datatable"
+productos_db <- tbl(conn, "productos")
 
 

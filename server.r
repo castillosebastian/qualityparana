@@ -1,5 +1,5 @@
 function(input, output, session) {
-  dataset_to_save<-reactive({
+  dataset_to_save <- reactive({
     my_data <- tibble(
       id_n=input$id_n,
       id_fecha=input$id_fecha,
@@ -12,23 +12,25 @@ function(input, output, session) {
       at_señal_entrada_esperada=input$at_señal_entrada_esperada,
       agenda_fecha=input$agenda_fecha,
       agenda_op_tipo=input$agenda_op_tipo)
- return(my_data)})
+ return(my_data) 
+    }
+ )
 
-registerData<-observeEvent(input$save,{
+registerData<-observeEvent(
+  input$save, {
+    my_dataset <- dataset_to_save()
+    withProgress(message="Registering",value=0.2,{dbWriteTable(conn, datatable, my_dataset, append=TRUE)})
+  
+    showModal(modalDialog(title = "Thank you!","Data has been saved"))
+    }
+  )
 
-  my_dataset<-dataset_to_save()
-
-  withProgress(message="Registering",value=0.2,{
-         dbWriteTable(conn, datatable, my_dataset,append=TRUE)
-   }) 
- showModal(modalDialog(
-  title = "Thank you!",
-  "Data has been saved"
-  ))
-})
 allData<-function(){
-    my_data<-tbl(conn,datatable)%>%collect()
+    my_data <- tbl(conn, datatable) %>%
+      collect()
+    
     shiny::validate(need(nrow(my_data)>0,"no data"))
+    
     return(my_data)
   }
 
@@ -37,17 +39,13 @@ output$data <- DT::renderDataTable({
   data <- data %>%
     select(everything())
 
-  DT::datatable(data,  selection = 'single',
-  filter='top',
-  rownames= FALSE,
-  escape=FALSE,
-  options = list(
-    autoWidth = TRUE,
-    scrollX = TRUE, 
-    pageLength = 50, 
-    columnDefs = list(list(width = '300px', targets = c(6))))
-  )
-})
+  DT::datatable(data,  selection = 'single', filter='top', rownames= FALSE,
+                escape=FALSE, options = list(
+                  autoWidth = TRUE, scrollX = TRUE, pageLength = 50, 
+                  columnDefs = list(list(width = '300px', targets = c(6))))
+                )
+  })
+  
 
 output$download_data <- downloadHandler(
   filename = function() {
@@ -55,3 +53,4 @@ output$download_data <- downloadHandler(
   },
   content = function(file) {
   write_csv(allData(), file)})}
+  
