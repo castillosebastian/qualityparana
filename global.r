@@ -18,8 +18,8 @@ library(RSQLite)
 library(googlesheets4)
 library(googledrive)
 #DB --------------------------------------------------------------------------
-conn <- dbConnect(RSQLite::SQLite(),"my-db.sqlite")
+conn <- dbConnect(RSQLite::SQLite(), "my-db.sqlite")
 datatable = "my_datatable"
-productos_db <- tbl(conn, "productos")
-
+productos <- read_csv("~/R/qualityparana/data/productos.csv")
+lista_precios <- read_csv("~/R/qualityparana/data/lista_precios.csv")
 

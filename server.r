@@ -19,6 +19,7 @@ function(input, output, session) {
 registerData<-observeEvent(
   input$save, {
     my_dataset <- dataset_to_save()
+    
     withProgress(message="Registering",value=0.2,{dbWriteTable(conn, datatable, my_dataset, append=TRUE)})
   
     showModal(modalDialog(title = "Thank you!","Data has been saved"))
@@ -45,8 +46,51 @@ output$data <- DT::renderDataTable({
                   columnDefs = list(list(width = '300px', targets = c(6))))
                 )
   })
-  
 
+# ventas output--------------------------------------------------
+output$precio_compra1 <- renderText({ lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto1 & 
+                                                             which.max(lista_precios$FECHA_PRECIO)] * input$cantidad1})
+output$precio_compra2 <- renderText({ lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto2 & 
+                                                             which.max(lista_precios$FECHA_PRECIO)]  * input$cantidad2})
+output$precio_compra3 <- renderText({ lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto3 & 
+                                                             which.max(lista_precios$FECHA_PRECIO)] * input$cantidad3})
+output$precio_compra4 <- renderText({ lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto4 & 
+                                                             which.max(lista_precios$FECHA_PRECIO)] * input$cantidad4})
+output$precio_compra5 <- renderText({ lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto5 & 
+                                                             which.max(lista_precios$FECHA_PRECIO)] * input$cantidad5})
+output$precio_compra6 <- renderText({ lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto6 & 
+                                                             which.max(lista_precios$FECHA_PRECIO)] * input$cantidad6})
+output$precio_compra7 <- renderText({ lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto7 & 
+                                                             which.max(lista_precios$FECHA_PRECIO)] * input$cantidad7})
+output$precio_compra8 <- renderText({ lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto8 & 
+                                                             which.max(lista_precios$FECHA_PRECIO)] * input$cantidad8})
+output$precio_compra9 <- renderText({ lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto9 & 
+                                                             which.max(lista_precios$FECHA_PRECIO)] * input$cantidad9})
+output$precio_compra10 <- renderText({ lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto10 & 
+                                                              which.max(lista_precios$FECHA_PRECIO)] * input$cantidad10})
+
+output$total_compra <- renderText({
+  sum(lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto1 & 
+                         which.max(lista_precios$FECHA_PRECIO)] * input$cantidad1, 
+    lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto2 & 
+                           which.max(lista_precios$FECHA_PRECIO)] * input$cantidad2,
+    lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto3 & 
+                           which.max(lista_precios$FECHA_PRECIO)] * input$cantidad3,
+    lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto4 & 
+                           which.max(lista_precios$FECHA_PRECIO)] * input$cantidad4,
+    lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto5 & 
+                           which.max(lista_precios$FECHA_PRECIO)] * input$cantidad5,
+    lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto6 & 
+                           which.max(lista_precios$FECHA_PRECIO)] * input$cantidad6,
+    lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto7 & 
+                           which.max(lista_precios$FECHA_PRECIO)] * input$cantidad7,
+    lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto8 & 
+                           which.max(lista_precios$FECHA_PRECIO)] * input$cantidad8,
+    lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto9 & 
+                           which.max(lista_precios$FECHA_PRECIO)] * input$cantidad9,
+    lista_precios$PRECIO[lista_precios$PRODUCTO == input$producto10 & 
+                           which.max(lista_precios$FECHA_PRECIO)] * input$cantidad10, na.rm = T)})
+# download----------------------------------------------------------------------------------------o
 output$download_data <- downloadHandler(
   filename = function() {
   paste("download_data", ".csv", sep = "")

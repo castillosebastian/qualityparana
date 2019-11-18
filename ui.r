@@ -11,8 +11,8 @@ sidebar <- dashboardSidebar(
                                 label = "Search..."),
               menuItem("Dashboard", tabName = "dashboard", icon = icon("dashboard")),
               menuItem("Ventas", icon = icon("th"), tabName = "Ventas",
-                       menuSubItem("Alta", tabName = "input_data_tab",selected = TRUE),
-                       menuSubItem("Consulta", tabName = "browse_data_tab",selected = TRUE))
+                       menuSubItem("Alta", tabName = "imput_ventas_tab",selected = TRUE),
+                       menuSubItem("Consulta", tabName = "browse_ventas_tab",selected = TRUE))
              
   )
 )
@@ -28,8 +28,8 @@ dashboardPage(
     #shinyjs::inlineCSS(appCSS),
     tags$head(tags$style(HTML(".shiny-split-layout > div {overflow: visible;}"))),
     tabItems(
-      input_data_tab(),
-      browse_data_tab()),
+      imput_ventas_tab(),
+      browse_ventas_tab()),
     use_bs_tooltip())
 )
 
